@@ -21,8 +21,8 @@ Command Line Arguments: Defaults, # Comments
         'TRACKERS_FOLDER': os.path.join(code_path, 'data/trackers/mot_challenge/'),  # Trackers location
         'OUTPUT_FOLDER': None,  # Where to save eval results (if None, same as TRACKERS_FOLDER)
         'TRACKERS_TO_EVAL': None,  # Filenames of trackers to eval (if None, all in folder)
-        'CLASSES_TO_EVAL': ['pedestrian'],  # Valid: ['pedestrian']
-        'BENCHMARK': 'MOT17',  # Valid: 'MOT17', 'MOT16', 'MOT20', 'MOT15'
+        'CLASSES_TO_EVAL': ['animal'],  # Valid: ['animal']
+        'BENCHMARK': 'AnimalTrack',  # Valid: 'MOT17', 'MOT16', 'MOT20', 'MOT15'
         'SPLIT_TO_EVAL': 'train',  # Valid: 'train', 'test', 'all'
         'INPUT_AS_ZIP': False,  # Whether tracker input files are zipped
         'PRINT_CONFIG': True,  # Whether to print current config

@@ -21,7 +21,7 @@ class MotChallenge2DBox(_BaseDataset):
             'TRACKERS_FOLDER': os.path.join(code_path, 'data/trackers/mot_challenge/'),  # Trackers location
             'OUTPUT_FOLDER': None,  # Where to save eval results (if None, same as TRACKERS_FOLDER)
             'TRACKERS_TO_EVAL': None,  # Filenames of trackers to eval (if None, all in folder)
-            'CLASSES_TO_EVAL': ['pedestrian'],  # Valid: ['pedestrian']
+            'CLASSES_TO_EVAL': ['animal'],  # Valid: ['animal']
             'BENCHMARK': 'MOT17',  # Valid: 'MOT17', 'MOT16', 'MOT20', 'MOT15'
             'SPLIT_TO_EVAL': 'train',  # Valid: 'train', 'test', 'all'
             'INPUT_AS_ZIP': False,  # Whether tracker input files are zipped
@@ -68,12 +68,12 @@ class MotChallenge2DBox(_BaseDataset):
         self.output_sub_fol = self.config['OUTPUT_SUB_FOLDER']
 
         # Get classes to eval
-        self.valid_classes = ['pedestrian']
+        self.valid_classes = ['animal']
         self.class_list = [cls.lower() if cls.lower() in self.valid_classes else None
                            for cls in self.config['CLASSES_TO_EVAL']]
         if not all(self.class_list):
-            raise TrackEvalException('Attempted to evaluate an invalid class. Only pedestrian class is valid.')
-        self.class_name_to_class_id = {'pedestrian': 1, 'person_on_vehicle': 2, 'car': 3, 'bicycle': 4, 'motorbike': 5,
+            raise TrackEvalException('Attempted to evaluate an invalid class. Only animal class is valid.')
+        self.class_name_to_class_id = {'animal': 1, 'person_on_vehicle': 2, 'car': 3, 'bicycle': 4, 'motorbike': 5,
                                        'non_mot_vehicle': 6, 'static_person': 7, 'distractor': 8, 'occluder': 9,
                                        'occluder_on_ground': 10, 'occluder_full': 11, 'reflection': 12, 'crowd': 13}
         self.valid_class_numbers = list(self.class_name_to_class_id.values())
@@ -313,11 +313,11 @@ class MotChallenge2DBox(_BaseDataset):
 
         MOT Challenge:
             In MOT Challenge, the 4 preproc steps are as follow:
-                1) There is only one class (pedestrian) to be evaluated, but all other classes are used for preproc.
+                1) There is only one class (animal) to be evaluated, but all other classes are used for preproc.
                 2) Predictions are matched against all gt boxes (regardless of class), those matching with distractor
                     objects are removed.
                 3) There is no crowd ignore regions.
-                4) All gt dets except pedestrian are removed, also removes pedestrian gt dets marked with zero_marked.
+                4) All gt dets except animal are removed, also removes animal gt dets marked with zero_marked.
         """
         # Check that input data has unique ids
         self._check_unique_ids(raw_data)
@@ -348,10 +348,10 @@ class MotChallenge2DBox(_BaseDataset):
             tracker_confidences = raw_data['tracker_confidences'][t]
             similarity_scores = raw_data['similarity_scores'][t]
 
-            # Evaluation is ONLY valid for pedestrian class
+            # Evaluation is ONLY valid for animal class
             if len(tracker_classes) > 0 and np.max(tracker_classes) > 1:
                 raise TrackEvalException(
-                    'Evaluation is only valid for pedestrian class. Non pedestrian class (%i) found in sequence %s at '
+                    'Evaluation is only valid for animal class. Non animal class (%i) found in sequence %s at '
                     'timestep %i.' % (np.max(tracker_classes), raw_data['seq'], t))
 
             # Match tracker and gt dets (with hungarian algorithm) and remove tracker dets which match with gt dets
@@ -386,7 +386,7 @@ class MotChallenge2DBox(_BaseDataset):
             data['tracker_confidences'][t] = np.delete(tracker_confidences, to_remove_tracker, axis=0)
             similarity_scores = np.delete(similarity_scores, to_remove_tracker, axis=1)
 
-            # Remove gt detections marked as to remove (zero marked), and also remove gt detections not in pedestrian
+            # Remove gt detections marked as to remove (zero marked), and also remove gt detections not in animal
             # class (not applicable for MOT15)
             if self.do_preproc and self.benchmark != 'MOT15':
                 gt_to_keep_mask = (np.not_equal(gt_zero_marked, 0)) & \
