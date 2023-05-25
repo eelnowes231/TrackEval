@@ -23,7 +23,7 @@ Assuming you already
 ## 2. Run TrackEval
 ``` 
 # Usage
-python ./TrackEval/scripts/run_mot_challenge.py --BENCHMARK AnimalTrack --SPLIT_TO_EVAL <train/test/all> --USE_PARALLEL False --DO_PREPROC False
+python ./TrackEval/scripts/run_mot_challenge.py --BENCHMARK AnimalTrack --SPLIT_TO_EVAL <train/test> --USE_PARALLEL False --DO_PREPROC False
 
 # ex. 
 python /home/n0/xxxx/Programs/TrackEval/scripts/run_mot_challenge.py --BENCHMARK AnimalTrack --SPLIT_TO_EVAL train --USE_PARALLEL False --DO_PREPROC False 
@@ -32,6 +32,6 @@ python /home/n0/xxxx/Programs/TrackEval/scripts/run_mot_challenge.py --BENCHMARK
 
 - What it does
     - evaluate the tracker output in `TrackEval/data/trackers/mot_challenge/AnimalTrack-<test/train>/<tracker-model>/data` 
-    - can set the evaluation mode to train/test/all. The sequence names are specified in `TrackEval/data/gt/mot_challenge/seqmaps`
+    - can set the evaluation mode to train or test. The sequence names are specified in `TrackEval/data/gt/mot_challenge/seqmaps`
     - if not specified, will run evaluation for all trackers (ex. DeepSORT)
     - save the results for each tracker in tracker data folder (`TrackEval/data/trackers/mot_challenge/AnimalTrack-<test/train>/<tracker-model>`)
