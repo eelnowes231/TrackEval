@@ -22,7 +22,6 @@ duck_2
 duck_3
 duck_4
 duck_5
-duck_6
 goose_1
 goose_2
 goose_3

@@ -11,7 +11,6 @@ dolphin_5
 dolphin_6
 duck_4
 duck_5
-duck_6
 goose_4
 goose_5
 goose_6
