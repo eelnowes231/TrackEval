@@ -23,7 +23,7 @@ class MotChallenge2DBox(_BaseDataset):
             'TRACKERS_TO_EVAL': None,  # Filenames of trackers to eval (if None, all in folder)
             'CLASSES_TO_EVAL': ['animal'],  # Valid: ['animal']
             'BENCHMARK': 'MOT17',  # Valid: 'MOT17', 'MOT16', 'MOT20', 'MOT15'
-            'SPLIT_TO_EVAL': 'train',  # Valid: 'train', 'test', 'all'
+            'SPLIT_TO_EVAL': 'train',  # Valid: 'train', 'test'
             'INPUT_AS_ZIP': False,  # Whether tracker input files are zipped
             'PRINT_CONFIG': True,  # Whether to print current config
             'DO_PREPROC': True,  # Whether to perform preprocessing (never done for MOT15)
@@ -165,6 +165,7 @@ class MotChallenge2DBox(_BaseDataset):
                     seq_list.append(seq)
                     ini_file = os.path.join(self.gt_fol, seq, 'seqinfo.ini')
                     if not os.path.isfile(ini_file):
+                        print("Expected ini path: ", ini_file)
                         raise TrackEvalException('ini file does not exist: ' + seq + '/' + os.path.basename(ini_file))
                     ini_data = configparser.ConfigParser()
                     ini_data.read(ini_file)

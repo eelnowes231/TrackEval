@@ -23,7 +23,7 @@ Command Line Arguments: Defaults, # Comments
         'TRACKERS_TO_EVAL': None,  # Filenames of trackers to eval (if None, all in folder)
         'CLASSES_TO_EVAL': ['animal'],  # Valid: ['animal']
         'BENCHMARK': 'AnimalTrack',  # Valid: 'MOT17', 'MOT16', 'MOT20', 'MOT15'
-        'SPLIT_TO_EVAL': 'train',  # Valid: 'train', 'test', 'all'
+        'SPLIT_TO_EVAL': 'train',  # Valid: 'train', 'test'
         'INPUT_AS_ZIP': False,  # Whether tracker input files are zipped
         'PRINT_CONFIG': True,  # Whether to print current config
         'DO_PREPROC': True,  # Whether to perform preprocessing (never done for 2D_MOT_2015)
