@@ -15,8 +15,13 @@ src=$1 # Folder with videos (ex. duck_5.mp4) to track
 out=$2 # Folder to save results 
 model=$3 # model name (ex. deepsort)
 mode=$4 # train or test 
-log="$out/log.txt" 
+log="$out/log_$model.txt" 
 
+###############################################
+# EDIT TO YOUR OWN MAT, TrackEval PATH
+mat="" # ex. ./MAT
+trackeval="" # ex. ./TrackEval
+###############################################
 
 echo "Video source folder: $src" >> $log
 echo "Output folder: $out" >> $log
@@ -26,17 +31,25 @@ echo "Mode: $mode" >> $log
 # Create output folder for evaluation
 mkdir -p "TrackEval/data/trackers/mot_challenge/AnimalTrack-$mode/$model/data"
 
-for vid in $src/*; do
+for vid in $src/*.mp4; do
     echo "Analyzing $vid, starting at $(date)" >> $log
     vid_name=$(basename $vid .mp4) # ex. duck_5
     mkdir -p $out/$vid_name
+    mkdir -p $trackeval/data/trackers/mot_challenge/AnimalTrack-$mode/$model/data --verbose
     
-    # Run tracker
-    python3 < track.py > --source $vid --output $out/$vid_name --save-txt True # will be saved under $out/$vid_name/raw_tracker.csv
+    # Run tracker - outputs will be saved under $out/$vid_name/raw_tracker.csv
+    ###############################################
+    # EDIT cfg, weights PATH TO YOUR OWN  
+    python3 $mat/track.py --source $vid --output $out/$vid_name --save-txt \
+    --cfg < path to yolov3.cfg > --weights < path to yolov3.weights >
+    echo "Done tracking $vid, ending at $(date)" >> $log
+    ###############################################
 
-    # Convert to MOT format 
-    python3 < TrackEval >/utils/convert_tracker_format.py \ 
+    # Convert to MOT format - outputs will be saved in TrackEval/data/...
+    python3 $trackeval/utils/convert_tracker_format.py \
     --raw_tracker_path $out/$vid_name/raw_tracker.csv \
-    --convert_path < TrackEval >/data/trackers/mot_challenge/AnimalTrack-$mode/$model/data/$vid_name.txt
+    --convert_path $trackeval/data/trackers/mot_challenge/AnimalTrack-$mode/$model/data/$vid_name.txt
+    echo "Done converting $vid_name, ending at $(date)" >> $log
 done
 
+echo "Done tracking all videos, ending at $(date)" >> $log
